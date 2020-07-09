@@ -2,7 +2,7 @@
 #define MYUM7_H
 
 //////////////////////////////////////
-//		CONFIGURATION REGISTERS		//
+//      CONFIGURATION REGISTERS	    //
 //////////////////////////////////////
 
 #define CREG_COM_SETTINGS 0x00 // Baud rates for reading over the UM7, default 115200 baud
@@ -53,7 +53,7 @@
 
 
 //////////////////////////////
-//		DATA REGISTERS		//
+//	DATA REGISTERS	    //
 //////////////////////////////
 
 #define DREG_HEALTH 0x55
@@ -118,7 +118,7 @@
 
 
 //////////////////////////////////
-//		COMMAND REGISTERS		//
+//	COMMAND REGISTERS	//
 //////////////////////////////////
 
 #define GET_FW_REVISION 0xAA
@@ -148,7 +148,7 @@ public:
 	uint32_t error;
 
 	//////////////////////////////////
-	//		ACCESIBLE FUNCTIONS		//
+	//	ACCESIBLE FUNCTIONS	//
 	//////////////////////////////////
 
 	bool decode(byte current_byte);
@@ -238,7 +238,7 @@ public:
 private:
 
 	//////////////////////////////////
-	//		INTERNAL FUNCTIONS		//
+	//	INTERNAL FUNCTIONS	//
 	//////////////////////////////////
 
 	bool checksum();
@@ -263,11 +263,11 @@ private:
 	byte cmd_buffer[7];
 	byte config_buffer[11];
 	char firmware[4];
-	byte checksum1;		// First byte of checksum
-	byte checksum0;		// Second byte of checksum
+	byte checksum1;		                            // First byte of checksum
+	byte checksum0;		                            // Second byte of checksum
 	uint16_t checksummer  = (checksum1<<8) | checksum0; // Combine the checksums
-	unsigned short checksum10;			// Checksum received from packet
-	unsigned short computed_checksum;	// Checksum computed from bytes received
+	unsigned short checksum10;			    // Checksum received from packet
+	unsigned short computed_checksum;	            // Checksum computed from bytes received
 };
 
 #endif
