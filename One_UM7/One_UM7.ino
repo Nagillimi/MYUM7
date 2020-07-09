@@ -19,10 +19,6 @@
  *     921600*         255          361.4                 90.4
  *  *Most MCUs won't support these higher baud rates, you require a high speed UART.
  *  
- *  
- *  - Reads processed gyro, accel, and magnetometer data
- *  - Reads euler data
- * 
  */
 #include <MYUM7.h>
 
