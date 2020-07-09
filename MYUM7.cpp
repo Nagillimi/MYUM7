@@ -1,24 +1,9 @@
-/*
-
-Custom UM7 Library for the Dynamic Knee Bracing Project
-Ben Milligan, 2020
-Compilation code from several libraries
-
-Notes:
-	byte == uint16_t
-	header file includes stdlib.h
-- 
-
-*/
-
 #include "MYUM7.h"
 #include "Arduino.h"
 
-
 //////////////////////////////////////////
-//		READ FUNCTIONS FOR THE UM7		//
+//	READ FUNCTIONS FOR THE UM7	//
 //////////////////////////////////////////
-
 
 /*
 	Default constructor. Initial state and serial port, pass as reference
@@ -27,7 +12,6 @@ MYUM7::MYUM7(HardwareSerial & serial) {
 	state = STATE_ZERO;
 	serial_port = serial;
 }
-
 
 /*
 	The function that decodes and parses incoming data from the UM7. 
@@ -98,7 +82,6 @@ bool MYUM7::decode(byte current_byte) {
 	}
 }
 
-
 /*
 	Checksum is used as a backcheck by the UM7 to ensure the correct packet was read.
 	This function ties directly with decode() and calls save() if the checksum matches the parsed data.
@@ -117,7 +100,6 @@ bool MYUM7::checksum() {
 		return false;
 	}
 }
-
 
 /*
 	The list of 'readable' registers by the UM7. Assigns the data[] variable to whatever dataset is beign read.
@@ -299,7 +281,6 @@ void MYUM7::save() {
 	}
 }
 
-
 /*
 	Union function which links a float to 4 bytes. Used to combine 4 bytes to one register.
 */
@@ -308,7 +289,6 @@ typedef union {
 	uint8_t bytes[4];
 } floatval;
 
-
 /*
 	
 */
@@ -316,7 +296,6 @@ union combine {
 	float f;
 	uint8_t b[4];
 };
-
 
 /*
 	Makes reading save() easier, this function reads a 4 byte register into a float (int32_t)
@@ -330,7 +309,6 @@ float MYUM7::read_register_as_float(int firstByte) { // For one register as an I
 	return temp.val;
 }
 
-
 /*
 	Parses error into string outputs
 */
@@ -338,11 +316,9 @@ void MYUM7::error_status() {
 	
 }
 
-
 //////////////////////////////////////////////
-//		COMMAND FUNCTIONS FOR THE UM7		//
+//	COMMAND FUNCTIONS FOR THE UM7       //
 //////////////////////////////////////////////
-
 
 /*
 	Sets the UM7 baud rate. If not called, default is 115200bps.
@@ -382,7 +358,6 @@ void MYUM7::set_sensor_baud_rate(float baud) {
 
 	serial_port.write(config_buffer, 11);
 }
-
 
 /*
 	Other form of set_sensor_baud_rate. Parameters are the UM7 baud rate as well as the gps baud rate.
@@ -438,7 +413,6 @@ void MYUM7::set_sensor_baud_rate(float baud, float gps_baud, bool gps, bool sat)
 	serial_port.write(config_buffer, 11);
 }
 
-
 /*
 	Sets the individual rates for the raw datasets. 
 	From 0 to 255 Hz, sent through their respective in their signed bytes.
@@ -464,9 +438,8 @@ void MYUM7::set_raw_rate(uint8_t accel_rate, uint8_t gyro_rate, uint8_t mag_rate
 	serial_port.write(config_buffer, 11);
 }
 
-
 /*
-	
+	Sets the rate for all raw datasets to the same desired rate
 */
 void MYUM7::set_all_raw_rate(uint8_t rate) {
 	config_buffer[0] = 's';
@@ -488,7 +461,6 @@ void MYUM7::set_all_raw_rate(uint8_t rate) {
 
 	serial_port.write(config_buffer, 11);
 }
-
 
 /*
 	Sets the rate for the temperature datasets as well as raw datasets.
@@ -514,9 +486,9 @@ void MYUM7::set_all_raw_rate(uint8_t temp_rate, uint8_t rate) {
 	serial_port.write(config_buffer, 11);
 }
 
-
 /*
-	
+	Sets the individual rates for the processed datasets. 
+	From 0 to 255 Hz, sent through their respective in their signed bytes.
 */
 void MYUM7::set_processed_rate(uint8_t accel_rate, uint8_t gyro_rate, uint8_t mag_rate) {
 	config_buffer[0] = 's';
@@ -539,9 +511,8 @@ void MYUM7::set_processed_rate(uint8_t accel_rate, uint8_t gyro_rate, uint8_t ma
 	serial_port.write(config_buffer, 11);
 }
 
-
 /*
-	
+	Sets the rate for all processed datasets to the same desired rate
 */
 void MYUM7::set_all_processed_rate(uint8_t rate) {
 	config_buffer[0] = 's';
@@ -564,9 +535,8 @@ void MYUM7::set_all_processed_rate(uint8_t rate) {
 	serial_port.write(config_buffer, 11);
 }
 
-
 /*
-	
+	Sets the rate for all quaternion datasets
 */
 void MYUM7::set_quaternion_rate(uint8_t rate) {
 	config_buffer[0] = 's';
@@ -589,9 +559,8 @@ void MYUM7::set_quaternion_rate(uint8_t rate) {
 	serial_port.write(config_buffer, 11);
 }
 
-
 /*
-	
+	Sets the rate for all euler angle datasets
 */
 void MYUM7::set_euler_rate(uint8_t rate) {
 	config_buffer[0] = 's';
@@ -614,9 +583,8 @@ void MYUM7::set_euler_rate(uint8_t rate) {
 	serial_port.write(config_buffer, 11);
 }
 
-
 /*
-	
+	Sets the rate for all position datasets
 */
 void MYUM7::set_position_rate(uint8_t rate) {
 	config_buffer[0] = 's';
@@ -639,9 +607,8 @@ void MYUM7::set_position_rate(uint8_t rate) {
 	serial_port.write(config_buffer, 11);
 }
 
-
 /*
-	
+	Sets the rate for all velocity datasets
 */
 void MYUM7::set_velocity_rate(uint8_t rate) {
 	config_buffer[0] = 's';
@@ -664,9 +631,8 @@ void MYUM7::set_velocity_rate(uint8_t rate) {
 	serial_port.write(config_buffer, 11);
 }
 
-
 /*
-
+	Sets the rate for all position and euler angle datasets to the same desired rate
 */
 void MYUM7::set_pose_rate(uint8_t rate) {
 	config_buffer[0] = 's';
@@ -689,9 +655,8 @@ void MYUM7::set_pose_rate(uint8_t rate) {
 	serial_port.write(config_buffer, 11);
 }
 
-
 /*
-	Default is 1 Hz.
+	Sets the rate for the health packet. Default is 1 Hz.
 */
 void MYUM7::set_health_rate(float baud) {
 	byte rate = 0;
@@ -723,9 +688,8 @@ void MYUM7::set_health_rate(float baud) {
 	serial_port.write(config_buffer, 11);
 }
 
-
 /*
-
+	Sets the rate for all gyro bias datasets
 */
 void MYUM7::set_gyro_bias_rate(uint8_t rate) {
 	config_buffer[0] = 's';
@@ -748,9 +712,8 @@ void MYUM7::set_gyro_bias_rate(uint8_t rate) {
 	serial_port.write(config_buffer, 11);
 }
 
-
 /*
-	
+	Sets the rate for the NMEA health packet
 */
 void MYUM7::set_NMEA_health_rate(int8_t baud) {
 	byte rate = 0;
@@ -791,9 +754,8 @@ void MYUM7::set_NMEA_health_rate(int8_t baud) {
 	serial_port.write(config_buffer, 11);
 }
 
-
 /*
-
+	Sets the rate for the NMEA position and euler angle datasets
 */
 void MYUM7::set_NMEA_pose_rate(int8_t baud) {
 	byte rate = 0;
@@ -834,9 +796,8 @@ void MYUM7::set_NMEA_pose_rate(int8_t baud) {
 	serial_port.write(config_buffer, 11);
 }
 
-
 /*
-
+	Sets the rate for the NMEA attitude datasets
 */
 void MYUM7::set_NMEA_attitude_rate(int8_t baud) {
 	byte rate = 0;
@@ -877,9 +838,8 @@ void MYUM7::set_NMEA_attitude_rate(int8_t baud) {
 	serial_port.write(config_buffer, 11);
 }
 
-
 /*
-
+	Sets the desired broadcast rate for NEMA sensor packets
 */
 void MYUM7::set_NMEA_sensor_rate(int8_t baud) {
 	byte rate = 0;
@@ -920,9 +880,8 @@ void MYUM7::set_NMEA_sensor_rate(int8_t baud) {
 	serial_port.write(config_buffer, 11);
 }
 
-
 /*
-
+	Sets the rate for the NMEA sensor datasets
 */
 void MYUM7::set_NMEA_rates_rate(int8_t baud) {
 	byte rate = 0;
@@ -963,9 +922,8 @@ void MYUM7::set_NMEA_rates_rate(int8_t baud) {
 	serial_port.write(config_buffer, 11);
 }
 
-
 /*
-
+	Sets the rate for the NMEA GPS pose datasets
 */
 void MYUM7::set_NMEA_GPS_pose_rate(int8_t baud) {
 	byte rate = 0;
@@ -1006,9 +964,8 @@ void MYUM7::set_NMEA_GPS_pose_rate(int8_t baud) {
 	serial_port.write(config_buffer, 11);
 }
 
-
 /*
-
+	Sets the rate for the NMEA quaternion datasets
 */
 void MYUM7::set_NMEA_quaternion_rate(int8_t baud) {
 	byte rate = 0;
@@ -1048,7 +1005,6 @@ void MYUM7::set_NMEA_quaternion_rate(int8_t baud) {
 
 	serial_port.write(config_buffer, 11);
 }
-
 
 /*
 	Miscellaneous settings for filter and sensor control options. Send a 0 if you don't wish to configure a specific setting
@@ -1095,8 +1051,6 @@ void MYUM7::set_misc_ssettings(bool pps, bool zg, bool q, bool mag) {
 	serial_port.write(config_buffer, 11);
 }
 
-
-
 /*
 	Configuration for hard setting the north orientation vector
 */
@@ -1122,7 +1076,6 @@ void  MYUM7::set_home_north(float north) {
 
 	serial_port.write(config_buffer, 11);
 }
-
 
 /*
 	Configuration for hard setting the east orientation vector
@@ -1151,7 +1104,6 @@ void  MYUM7::set_home_east(float east) {
 	serial_port.write(config_buffer, 11);
 }
 
-
 /*
 	Configuration for hard setting the up orientation vector
 */
@@ -1178,7 +1130,6 @@ void  MYUM7::set_home_up(float up) {
 
 	serial_port.write(config_buffer, 11);
 }
-
 
 /*
 	Configuration for the gyro trim in XYZ. It's calculated additioanly to the intial bias compensation (done in 
@@ -1211,7 +1162,6 @@ void  MYUM7::set_gyro_trim(float trim_x, float trim_y, float trim_z) {
 		serial_port.write(config_buffer, 11);
 	}
 }
-
 
 /*
 	Uses 9 entries to perform a soft-iron calibration of the magnetometer. These terms are computed from the RedShiftLabs
@@ -1248,7 +1198,6 @@ void  MYUM7::soft_iron_magnetometer_calibration(float (*array)[3][3]) {
 	}
 }
 
-
 /*
 	Performs a hard-iron calibration of the magnetometer. These terms are computed from the RedShiftLabs
 	Serial Interface
@@ -1280,7 +1229,6 @@ void  MYUM7::hard_iron_magnetometer_calibration(float bias_x, float bias_y, floa
 		serial_port.write(config_buffer, 11);
 	}
 }
-
 
 /*
 	Uses 9 entries to the cross axis misalignment of the accelerometer. 
@@ -1316,7 +1264,6 @@ void  MYUM7::accelerometer_misalignment_compensation(float (*array)[3][3]) {
 	}
 }
 
-
 /*
 	Performs a calibration for the accelerometer bias in XYZ directions. These terms are computed from the RedShiftLabs
 	Serial Interface
@@ -1349,7 +1296,6 @@ void  MYUM7::accelerometer_calibration(float bias_x, float bias_y, float bias_z)
 	}
 }
 
-
 /*
 	Causes UM7 to transmit a packet containing the firmware revision string (a 4B char sequence)
 
@@ -1376,7 +1322,6 @@ char* MYUM7::get_firmware_revision() {
 	return firmware;
 }
 
-
 /*
 	Causes the UM7 to write all configuration settings to FLASH so that they will remain when the power is cycled.
 */
@@ -1394,7 +1339,6 @@ void MYUM7::save_configs_to_flash() {
 
 	serial_port.write(cmd_buffer, 7);
 }
-
 
 /*
 	Causes the UM7 to load default factory settings.
@@ -1415,7 +1359,6 @@ void MYUM7::factory_reset() {
 	Serial.println("FACTORY RESET UM7"); // default serial_port 0
 }
 
-
 /*
 	Causes the UM7 to measure the gyro outputs and set the output trim registers to compensate for any non-zero bias. 
 	The UM7 should be kept stationary while the zero operation is underway.
@@ -1434,7 +1377,6 @@ void MYUM7::zero_gyros() { // Doesn't check for COMMAND_COMPLETE byte, only send
 	
 	serial_port.write(cmd_buffer, 7);
 }
-
 
 /*
 	Sets the current GPS latitude, longitude, and altitude as the home position. 
@@ -1455,7 +1397,6 @@ void  MYUM7::set_home_position() {
 	serial_port.write(cmd_buffer, 7);
 }
 
-
 /*
 	Sets the current yaw heading position as north.
 */
@@ -1474,7 +1415,6 @@ void  MYUM7::set_mag_reference() {
 	serial_port.write(cmd_buffer, 7);
 }
 
-
 /*
 	Reboots the UM7 and performs a crude calibration on the accelerometers. Best performed on a flat surface.
 */
@@ -1492,7 +1432,6 @@ void MYUM7::calibrate_accelerometers() {
 
 	serial_port.write(cmd_buffer, 7);
 }
-
 
 /*
 	Resets the EKF. Extended Kalman Filter (EKF)
