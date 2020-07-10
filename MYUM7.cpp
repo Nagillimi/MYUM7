@@ -1,5 +1,4 @@
 #include "MYUM7.h"
-#include "Arduino.h"
 
 //////////////////////////////////////////
 //	READ FUNCTIONS FOR THE UM7	//
@@ -8,9 +7,9 @@
 /*
 	Default constructor. Initial state and serial port, pass as reference
 */
-MYUM7::MYUM7(HardwareSerial & serial) { 
+MYUM7::MYUM7(HardwareSerial &serial) { 
 	state = STATE_ZERO;
-	serial_port = serial;
+	serial_port = &serial;
 }
 
 /*
@@ -356,7 +355,7 @@ void MYUM7::set_sensor_baud_rate(float baud) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -410,7 +409,7 @@ void MYUM7::set_sensor_baud_rate(float baud, float gps_baud, bool gps, bool sat)
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -435,7 +434,7 @@ void MYUM7::set_raw_rate(uint8_t accel_rate, uint8_t gyro_rate, uint8_t mag_rate
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -459,7 +458,7 @@ void MYUM7::set_all_raw_rate(uint8_t rate) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -483,7 +482,7 @@ void MYUM7::set_all_raw_rate(uint8_t temp_rate, uint8_t rate) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -508,7 +507,7 @@ void MYUM7::set_processed_rate(uint8_t accel_rate, uint8_t gyro_rate, uint8_t ma
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -532,7 +531,7 @@ void MYUM7::set_all_processed_rate(uint8_t rate) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -556,7 +555,7 @@ void MYUM7::set_quaternion_rate(uint8_t rate) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -580,7 +579,7 @@ void MYUM7::set_euler_rate(uint8_t rate) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -604,7 +603,7 @@ void MYUM7::set_position_rate(uint8_t rate) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -628,7 +627,7 @@ void MYUM7::set_velocity_rate(uint8_t rate) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -652,7 +651,7 @@ void MYUM7::set_pose_rate(uint8_t rate) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -685,7 +684,7 @@ void MYUM7::set_health_rate(float baud) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -709,7 +708,7 @@ void MYUM7::set_gyro_bias_rate(uint8_t rate) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -751,7 +750,7 @@ void MYUM7::set_NMEA_health_rate(int8_t baud) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -793,7 +792,7 @@ void MYUM7::set_NMEA_pose_rate(int8_t baud) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -835,7 +834,7 @@ void MYUM7::set_NMEA_attitude_rate(int8_t baud) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -877,7 +876,7 @@ void MYUM7::set_NMEA_sensor_rate(int8_t baud) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -919,7 +918,7 @@ void MYUM7::set_NMEA_rates_rate(int8_t baud) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -961,7 +960,7 @@ void MYUM7::set_NMEA_GPS_pose_rate(int8_t baud) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -1003,7 +1002,7 @@ void MYUM7::set_NMEA_quaternion_rate(int8_t baud) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -1048,7 +1047,7 @@ void MYUM7::set_misc_ssettings(bool pps, bool zg, bool q, bool mag) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -1074,7 +1073,7 @@ void  MYUM7::set_home_north(float north) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -1101,7 +1100,7 @@ void  MYUM7::set_home_east(float east) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -1128,7 +1127,7 @@ void  MYUM7::set_home_up(float up) {
 	config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 	config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-	serial_port.write(config_buffer, 11);
+	serial_port->write(config_buffer, 11);
 }
 
 /*
@@ -1159,7 +1158,7 @@ void  MYUM7::set_gyro_trim(float trim_x, float trim_y, float trim_z) {
 		config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 		config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-		serial_port.write(config_buffer, 11);
+		serial_port->write(config_buffer, 11);
 	}
 }
 
@@ -1193,7 +1192,7 @@ void  MYUM7::soft_iron_magnetometer_calibration(float (*array)[3][3]) {
 			config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 			config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-			serial_port.write(config_buffer, 11);
+			serial_port->write(config_buffer, 11);
 		}
 	}
 }
@@ -1226,7 +1225,7 @@ void  MYUM7::hard_iron_magnetometer_calibration(float bias_x, float bias_y, floa
 		config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 		config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-		serial_port.write(config_buffer, 11);
+		serial_port->write(config_buffer, 11);
 	}
 }
 
@@ -1259,7 +1258,7 @@ void  MYUM7::accelerometer_misalignment_compensation(float (*array)[3][3]) {
 			config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 			config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-			serial_port.write(config_buffer, 11);
+			serial_port->write(config_buffer, 11);
 		}
 	}
 }
@@ -1292,7 +1291,7 @@ void  MYUM7::accelerometer_calibration(float bias_x, float bias_y, float bias_z)
 		config_buffer[10] = checksumsum & 0xFF; // Checksum LOW byte
 		config_buffer[9] = (checksumsum >> 8); // Checksum HIGH byte
 
-		serial_port.write(config_buffer, 11);
+		serial_port->write(config_buffer, 11);
 	}
 }
 
@@ -1313,10 +1312,10 @@ char* MYUM7::get_firmware_revision() {
 	cmd_buffer[6] = checksumsum & 0xFF;
 	cmd_buffer[5] = (checksumsum >> 8);
 
-	serial_port.write(cmd_buffer, 7);
+	serial_port->write(cmd_buffer, 7);
 
 	
-	serial_port.readBytes(firmware, 4);
+	serial_port->readBytes(firmware, 4);
 	
 	
 	return firmware;
@@ -1337,7 +1336,7 @@ void MYUM7::save_configs_to_flash() {
 	cmd_buffer[6] = checksumsum & 0xFF;
 	cmd_buffer[5] = (checksumsum >> 8);
 
-	serial_port.write(cmd_buffer, 7);
+	serial_port->write(cmd_buffer, 7);
 }
 
 /*
@@ -1355,7 +1354,7 @@ void MYUM7::factory_reset() {
 	cmd_buffer[6] = checksumsum & 0xFF;
 	cmd_buffer[5] = (checksumsum >> 8);
 
-	serial_port.write(cmd_buffer, 7);
+	serial_port->write(cmd_buffer, 7);
 	Serial.println("FACTORY RESET UM7"); // default serial_port 0
 }
 
@@ -1375,7 +1374,7 @@ void MYUM7::zero_gyros() { // Doesn't check for COMMAND_COMPLETE byte, only send
 	cmd_buffer[6] = checksumsum & 0xFF;
 	cmd_buffer[5] = (checksumsum >> 8);
 	
-	serial_port.write(cmd_buffer, 7);
+	serial_port->write(cmd_buffer, 7);
 }
 
 /*
@@ -1394,7 +1393,7 @@ void  MYUM7::set_home_position() {
 	cmd_buffer[6] = checksumsum & 0xFF;
 	cmd_buffer[5] = (checksumsum >> 8);
 
-	serial_port.write(cmd_buffer, 7);
+	serial_port->write(cmd_buffer, 7);
 }
 
 /*
@@ -1412,7 +1411,7 @@ void  MYUM7::set_mag_reference() {
 	cmd_buffer[6] = checksumsum & 0xFF;
 	cmd_buffer[5] = (checksumsum >> 8);
 
-	serial_port.write(cmd_buffer, 7);
+	serial_port->write(cmd_buffer, 7);
 }
 
 /*
@@ -1430,7 +1429,7 @@ void MYUM7::calibrate_accelerometers() {
 	cmd_buffer[6] = checksumsum & 0xFF;
 	cmd_buffer[5] = (checksumsum >> 8);
 
-	serial_port.write(cmd_buffer, 7);
+	serial_port->write(cmd_buffer, 7);
 }
 
 /*
@@ -1448,5 +1447,5 @@ void MYUM7::reset_kalman_filter() {
 	cmd_buffer[6] = checksumsum & 0xFF;
 	cmd_buffer[5] = (checksumsum >> 8);
 
-	serial_port.write(cmd_buffer, 7);
+	serial_port->write(cmd_buffer, 7);
 }
