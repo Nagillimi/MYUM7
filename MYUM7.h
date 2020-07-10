@@ -142,9 +142,8 @@
 class MYUM7 {
 
 public:
-	MYUM7(HardwareSerial & serial); // Constructor
-	HardwareSerial serial_port;
-
+	MYUM7(HardwareSerial &serial); // Constructor
+	HardwareSerial *serial_port;
 	uint32_t error;
 
 	//////////////////////////////////
