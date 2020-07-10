@@ -1,7 +1,7 @@
 /* Example Arduino code for one UM7 sending IMU binary packets at 255 Hz over UART.
  * A revision of the library written by Mike Hoyer: https://github.com/mikehoyer/UM7-Arduino.git
  * Implemented all read/write functions, all configuration settings, and all possible 
- * datasets. See READ_ME for a complete list.
+ * datasets. See README for a complete list.
  * 
  * Table for binary packet rate over UART (1 start bit + 8 data bits + 1 stop bit)/Byte
  *  |    Baud    |    Rate    |    B/transfer   |   Registers/transfer
@@ -18,16 +18,13 @@
  *     460800*         255          180.7                 45.2
  *     921600*         255          361.4                 90.4
  *  *Most MCUs won't support these higher baud rates, you require a high speed UART.
- *  
- *  
- *  - Reads processed gyro, accel, and magnetometer data
- *  - Reads euler data
  * 
  */
 #include <MYUM7.h>
 
 // Setup one UM7 on Serial1 (TX1/RX1)
 MYUM7 imu(Serial1);
+long init;
 
 void setup() {
   // Set baud rate between PC and MCU
@@ -60,7 +57,9 @@ void setup() {
   // If you'd like to extract the health packet to see any errors in the UM7,
 //  if(Serial1.available())
 //   if(imu.decode(Serial1.read())
-//    Serial.println(imu.error); 
+//    Serial.println(imu.error);
+  
+  init = micros();
 }
 
 void loop() {
@@ -69,7 +68,8 @@ void loop() {
     
     // Reads byte from buffer, valid packet returns true and executes if statement.
     if (imu.decode(Serial1.read())) {
-
+      Serial.print(micros()-init); Serial.print(", ");
+      
       // Print all raw datasets (exluding times)
 //      Serial.print(imu.gyro_raw_x); Serial.print(", ");
 //      Serial.print(imu.gyro_raw_y); Serial.print(", ");
@@ -123,7 +123,9 @@ void loop() {
       Serial.print(imu.yaw); Serial.print(", ");
       Serial.print(imu.roll_rate); Serial.print(", ");
       Serial.print(imu.pitch_rate); Serial.print(", ");
-      Serial.print(imu.yaw_rate); Serial.print("\n"); // Must have \n on the last dataset for Arduino IDE graph
+      Serial.print(imu.yaw_rate); 
+      
+      Serial.print("\n"); // Must have \n on the last dataset for Arduino IDE graph
      }
   }
 }
