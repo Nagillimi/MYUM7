@@ -28,12 +28,12 @@ void setup() {
   imu3.set_sensor_baud_rate(115200);
 
   // Set euler and all processed datasets
-  imu1.set_euler_rate(150);
-  imu2.set_euler_rate(200);
+  imu1.set_euler_rate(255);
+  imu2.set_euler_rate(255);
   imu3.set_euler_rate(255);
   
-  imu1.set_all_processed_rate(150);
-  imu2.set_all_processed_rate(200);
+  imu1.set_all_processed_rate(255);
+  imu2.set_all_processed_rate(255);
   imu3.set_all_processed_rate(255);
 
   // Zero Gyros and Calibrate Accelerometers
@@ -48,15 +48,12 @@ void setup() {
 }
 
 void loop() {
-  // Read data when it's available from either Serial1,2,3 on the MCU. This allows for different UM7 com rates
-  // If all UM7s are synchronized to the same data rate of say, 255 Hz, uncomment the && version if()'s
-  
-  // if (Serial1.available() > 0 && Serial2.available() > 0 && Serial3.available() > 0) {  
-  if (Serial1.available() > 0 || Serial2.available() > 0 || Serial3.available() > 0) {  
+    
+  if (Serial1.available() > 0 && Serial2.available() > 0 && Serial3.available() > 0) {   
     
     // Reads byte from buffer, valid packet returns true and executes if statement.
-    // if (imu1.decode(Serial1.read()) && imu2.decode(Serial1.read()) && imu3.decode(Serial1.read())) {
-    if (imu1.decode(Serial1.read()) || imu2.decode(Serial1.read()) || imu3.decode(Serial1.read())) {
+    // if (imu1.decode(Serial1.read()) && imu2.decode(Serial2.read()) && imu3.decode(Serial3.read())) {
+    if (imu1.decode(Serial1.read()) || imu2.decode(Serial2.read()) || imu3.decode(Serial3.read())) {
 
       // Print euler datasets from each UM7     
       Serial.print(imu1.roll); Serial.print(", ");
@@ -70,6 +67,8 @@ void loop() {
       Serial.print(imu3.roll); Serial.print(", ");
       Serial.print(imu3.pitch); Serial.print(", ");
       Serial.println(imu3.yaw);
+      
+      Serial.print("\n");
      }
   }
 }
