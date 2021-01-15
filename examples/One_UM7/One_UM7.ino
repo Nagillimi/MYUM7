@@ -49,10 +49,11 @@ void setup() {
   // imu.set_processed_rate(100, 200, 255);
 
   // Zero Gyros and Calibrate Accelerometers
-  imu.zero_gyros();
-  delay(100);
-  imu.calibrate_accelerometers();
-  delay(100);
+  // This will
+//   imu.zero_gyros();
+//   delay(100);
+//   imu.calibrate_accelerometers();
+//   delay(100);
 
   // If you'd like to extract the health packet to see any errors in the UM7,
 //  if(Serial1.available())
