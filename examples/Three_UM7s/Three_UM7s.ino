@@ -37,14 +37,15 @@ void setup() {
   imu3.set_all_processed_rate(255);
 
   // Zero Gyros and Calibrate Accelerometers
-  imu1.zero_gyros();
-  imu2.zero_gyros();
-  imu3.zero_gyros();
-  delay(2000);
-  imu1.calibrate_accelerometers();
-  imu2.calibrate_accelerometers();
-  imu3.calibrate_accelerometers();
-  delay(2000);
+  // Note: Calibration sets the biasing for the XYZ accel vectors, it will rotate the coordinate system to center about [0,0,1](G).
+//   imu1.zero_gyros();
+//   imu2.zero_gyros();
+//   imu3.zero_gyros();
+//   delay(2000);
+//   imu1.calibrate_accelerometers();
+//   imu2.calibrate_accelerometers();
+//   imu3.calibrate_accelerometers();
+//   delay(2000);
 }
 
 void loop() {
