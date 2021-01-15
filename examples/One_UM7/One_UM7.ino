@@ -49,7 +49,7 @@ void setup() {
   // imu.set_processed_rate(100, 200, 255);
 
   // Zero Gyros and Calibrate Accelerometers
-  // This will
+  // Note: Calibration sets the biasing for the XYZ accel vectors, it will rotate the coordinate system to center about [0,0,1](G).
 //   imu.zero_gyros();
 //   delay(100);
 //   imu.calibrate_accelerometers();
