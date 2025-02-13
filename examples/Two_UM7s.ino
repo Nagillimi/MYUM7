@@ -44,22 +44,25 @@ void setup() {
   init = micros();
 }
 
-void loop() { 
-  if (Serial1.available() > 0 && Serial2.available() > 0 ){  
-    
-    // Reads byte from buffer, valid packet returns true and executes if statement.
-     if (imu1.decode(Serial1.read()) || imu2.decode(Serial2.read()) ){
-      Serial.print(micros()-init); Serial.print(", ");
-      // Print euler datasets from each UM7     
-      Serial.print(imu1.roll); Serial.print(", ");
-      Serial.print(imu1.pitch); Serial.print(", ");
-      Serial.print(imu1.yaw); Serial.print(", ");
-
-      Serial.print(imu2.roll); Serial.print(", ");
-      Serial.print(imu2.pitch); Serial.print(", ");
-      Serial.print(imu2.yaw); Serial.print(", ");
-
-      Serial.print("\n");
-     }
+void loop() {
+  Serial.print(micros() - init); Serial.print(", ");
+  
+  if (Serial1.available() && imu1.decode(Serial1.read())) {
+    Serial.print(imu1.roll);
+    Serial.print(", ");
+    Serial.print(imu1.pitch);
+    Serial.print(", ");
+    Serial.print(imu1.yaw);
   }
+  
+  if (Serial2.available() && imu2.decode(Serial2.read())) {
+    Serial.print(", ");
+    Serial.print(imu2.roll);
+    Serial.print(", ");
+    Serial.print(imu2.pitch);
+    Serial.print(", ");
+    Serial.print(imu2.yaw);
+  }
+  
+  Serial.println();
 }
