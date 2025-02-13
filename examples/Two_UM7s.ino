@@ -34,12 +34,13 @@ void setup() {
   imu2.set_all_processed_rate(255);
 
   // Zero Gyros and Calibrate Accelerometers
-  imu1.zero_gyros();
-  imu2.zero_gyros();
-  delay(100);
-  imu1.calibrate_accelerometers();
-  imu2.calibrate_accelerometers();
-  delay(100);
+  // imu1.zero_gyros();
+  // imu2.zero_gyros();
+  // delay(100);
+  
+  // imu1.calibrate_accelerometers();
+  // imu2.calibrate_accelerometers();
+  // delay(100);
 
   init = micros();
 }
